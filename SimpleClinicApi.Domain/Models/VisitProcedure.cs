@@ -22,7 +22,7 @@ namespace SimpleClinicApi.Domain.Models
       {
          get;
          init;
-      }
+      } = null!;
 
       [Required]
       public int ProcedureId
@@ -31,11 +31,11 @@ namespace SimpleClinicApi.Domain.Models
          init;
       }
 
-      public Procedure? Procedure
+      public Procedure Procedure
       {
          get;
          init;
-      }
+      } = null!;
 
       [MaxLength(500)]
       public string? Notes

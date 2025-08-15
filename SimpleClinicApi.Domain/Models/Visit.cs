@@ -64,5 +64,11 @@ namespace SimpleClinicApi.Domain.Models
          get;
          init;
       }
+
+      public bool IsCompleted
+      {
+         get;
+         set;
+      }
    }
 }
