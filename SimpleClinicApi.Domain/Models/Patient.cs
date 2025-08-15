@@ -7,11 +7,11 @@ namespace SimpleClinicApi.Domain.Models
    public class Patient
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
          set;
-      }
+      } = Guid.NewGuid();
 
       [Required, MaxLength(100)]
       public string FullName

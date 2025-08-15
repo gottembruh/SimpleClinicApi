@@ -1,18 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinicApi.Domain.Models
 {
    public class VisitProcedure
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
          init;
-      }
+      } = Guid.NewGuid();
 
       [Required]
-      public int VisitId
+      public Guid VisitId
       {
          get;
          init;
@@ -25,7 +26,7 @@ namespace SimpleClinicApi.Domain.Models
       } = null!;
 
       [Required]
-      public int ProcedureId
+      public Guid ProcedureId
       {
          get;
          init;

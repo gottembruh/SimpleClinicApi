@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinicApi.Domain.Models
@@ -6,11 +7,11 @@ namespace SimpleClinicApi.Domain.Models
    public class Doctor
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
          set;
-      }
+      } = Guid.NewGuid();
 
       [Required]
       [MaxLength(100)]

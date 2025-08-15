@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinicApi.Domain.Models
@@ -5,11 +6,11 @@ namespace SimpleClinicApi.Domain.Models
    public class Procedure
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
          set;
-      }
+      } = Guid.NewGuid();
 
       [Required]
       [MaxLength(150)]

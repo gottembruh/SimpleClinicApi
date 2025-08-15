@@ -1,31 +1,32 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinicApi.Domain.Models
 {
    public class VisitMedication
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
-         set;
-      }
+         init;
+      } = Guid.NewGuid();
 
       [Required]
-      public int VisitId
+      public Guid VisitId
       {
          get;
-         set;
+         init;
       }
 
       public Visit Visit
       {
          get;
-         set;
+         init;
       }
 
       [Required]
-      public int MedicationId
+      public Guid MedicationId
       {
          get;
          set;
@@ -42,13 +43,13 @@ namespace SimpleClinicApi.Domain.Models
       {
          get;
          set;
-      } // Дозировка
+      }
 
       [MaxLength(500)]
       public string Notes
       {
          get;
          set;
-      } // Дополнительная информация
+      }
    }
 }

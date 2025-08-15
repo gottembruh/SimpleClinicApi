@@ -7,11 +7,11 @@ namespace SimpleClinicApi.Domain.Models
    public class Visit
    {
       [Key]
-      public int Id
+      public Guid Id
       {
          get;
          init;
-      }
+      }= Guid.NewGuid();
 
       [Required]
       public DateTime VisitDate
@@ -28,7 +28,7 @@ namespace SimpleClinicApi.Domain.Models
       }
 
       [Required]
-      public int PatientId
+      public Guid PatientId
       {
          get;
          init;
@@ -41,7 +41,7 @@ namespace SimpleClinicApi.Domain.Models
       } = null!;
 
       [Required]
-      public int DoctorId
+      public Guid DoctorId
       {
          get;
          init;
