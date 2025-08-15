@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi", "SimpleClinicApi\SimpleClinicApi.csproj", "{2C46749D-16A0-4982-87F3-AB04B0419B56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.Domain", "SimpleClinicApi.Domain\SimpleClinicApi.Domain.csproj", "{76208A68-E820-461B-B45A-8D33866DBEF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.DataAccess", "SimpleClinicApi.DataAccess\SimpleClinicApi.DataAccess.csproj", "{808F0B8A-088C-4F36-8A9C-8948EA8EE016}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C46749D-16A0-4982-87F3-AB04B0419B56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C46749D-16A0-4982-87F3-AB04B0419B56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C46749D-16A0-4982-87F3-AB04B0419B56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C46749D-16A0-4982-87F3-AB04B0419B56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76208A68-E820-461B-B45A-8D33866DBEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76208A68-E820-461B-B45A-8D33866DBEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76208A68-E820-461B-B45A-8D33866DBEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76208A68-E820-461B-B45A-8D33866DBEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
