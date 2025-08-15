@@ -28,11 +28,6 @@ else
    throw new Exception("Unsupported database provider");
 }
 
-// Добавляем DbContext с Identity для пользователя
-builder.Services.AddDbContext<ClinicDbContext>(options =>
-                                                  options.UseSqlServer(configuration
-                                                                          .GetConnectionString("DefaultConnection")));
-
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
        .AddEntityFrameworkStores<ClinicDbContext>()
        .AddDefaultTokenProviders();
