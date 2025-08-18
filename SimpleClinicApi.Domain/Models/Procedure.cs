@@ -9,7 +9,7 @@ namespace SimpleClinicApi.Domain.Models
       public Guid Id
       {
          get;
-         set;
+         init;
       } = Guid.NewGuid();
 
       [Required]

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.Domain", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.DataAccess", "SimpleClinicApi.DataAccess\SimpleClinicApi.DataAccess.csproj", "{808F0B8A-088C-4F36-8A9C-8948EA8EE016}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.Infrastructure", "SimpleClinicApi.Infrastructure\SimpleClinicApi.Infrastructure.csproj", "{5550135C-DBEB-4E3F-BE48-25E937E554B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{808F0B8A-088C-4F36-8A9C-8948EA8EE016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5550135C-DBEB-4E3F-BE48-25E937E554B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5550135C-DBEB-4E3F-BE48-25E937E554B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5550135C-DBEB-4E3F-BE48-25E937E554B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5550135C-DBEB-4E3F-BE48-25E937E554B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

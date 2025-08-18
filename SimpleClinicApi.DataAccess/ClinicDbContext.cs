@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using SimpleClinicApi.Domain.Models;
 
 namespace SimpleClinicApi.DataAccess
 {
-   public class ClinicDbContext : IdentityDbContext
+   public class ClinicDbContext(DbContextOptions<ClinicDbContext> options) : IdentityDbContext(options)
    {
-      public ClinicDbContext(DbContextOptions<ClinicDbContext> options)
-         : base(options) {}
+      private IDbContextTransaction? _currentTransaction;
 
       public DbSet<Patient> Patients
       {
@@ -135,6 +136,57 @@ namespace SimpleClinicApi.DataAccess
                      .OnDelete(DeleteBehavior.Restrict);
       }
 
+      public void BeginTransaction()
+      {
+         if (_currentTransaction != null)
+         {
+            return;
+         }
+
+         if (!Database.IsInMemory())
+         {
+            _currentTransaction = Database.BeginTransaction(IsolationLevel.ReadCommitted);
+         }
+      }
+
+      public void CommitTransaction()
+      {
+         try
+         {
+            _currentTransaction?.Commit();
+         }
+         catch
+         {
+            RollbackTransaction();
+
+            throw;
+         }
+         finally
+         {
+            if (_currentTransaction != null)
+            {
+               _currentTransaction.Dispose();
+               _currentTransaction = null;
+            }
+         }
+      }
+
+      public void RollbackTransaction()
+      {
+         try
+         {
+            _currentTransaction?.Rollback();
+         }
+         finally
+         {
+            if (_currentTransaction != null)
+            {
+               _currentTransaction.Dispose();
+               _currentTransaction = null;
+            }
+         }
+      }
+
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
          optionsBuilder.UseSqlite("Data Source=clinic.db")
@@ -154,7 +206,7 @@ namespace SimpleClinicApi.DataAccess
 
          if (await context.Patients.AnyAsync(cancellationToken))
          {
-            return; // DB already seeded
+            return;
          }
 
          // Patients

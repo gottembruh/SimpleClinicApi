@@ -35,7 +35,6 @@ namespace SimpleClinicApi.Domain.Models
          set;
       }
 
-      // Навигационное свойство — визиты врача
       public ICollection<Visit> Visits
       {
          get;
