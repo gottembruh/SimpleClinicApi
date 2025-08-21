@@ -1,51 +1,38 @@
-﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SimpleClinicApi.Domain.Models;
 
-namespace SimpleClinicApi.Domain.Models
+namespace SimpleClinicApi.Infrastructure.Dtos
 {
-   public class VisitMedication
+   public class VisitProcedureDto
    {
-      [Key]
-      public Guid Id
-      {
-         get;
-         init;
-      } = Guid.NewGuid();
-
-      [Required]
-      public Guid VisitId
-      {
-         get;
-         init;
-      }
-
-      public Visit Visit
+      public ProcedureDto Procedure
       {
          get;
          init;
       } = null!;
 
-      [Required]
-      public Guid MedicationId
+      public string? Notes
       {
          get;
          init;
       }
+   }
 
+   public class VisitMedicationDto
+   {
       public Medication Medication
       {
          get;
          init;
       } = null!;
 
-      [MaxLength(100)]
+
       public string Dosage
       {
          get;
          init;
       } = null!;
 
-      [MaxLength(500)]
       public string? Notes
       {
          get;

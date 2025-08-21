@@ -1,26 +1,21 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace SimpleClinicApi.Domain.Models
+namespace SimpleClinicApi.Infrastructure.Dtos
 {
-   public class Medication
+   public class MedicationDto
    {
-      [Key]
       public Guid Id
       {
          get;
          init;
-      } = Guid.NewGuid();
+      } 
 
-      [Required]
-      [MaxLength(150)]
       public string Name
       {
          get;
          init;
       }
 
-      [MaxLength(300)]
       public string? Description
       {
          get;

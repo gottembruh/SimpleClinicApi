@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace SimpleClinicApi.Domain.Models
 {
@@ -39,10 +41,16 @@ namespace SimpleClinicApi.Domain.Models
          init;
       } = null!;
 
-      public ICollection<Visit>? Visits
+      public ICollection<Visit> Visits
       {
          get;
          init;
-      }
+      } = new List<Visit>();
+
+      [NotMapped]
+      public int VisitsCount => Visits?.Count ?? 0;
+
+      [NotMapped]
+      public IEnumerable<Guid>? VisitsIds => Visits?.Select(v => v.Id);
    }
 }

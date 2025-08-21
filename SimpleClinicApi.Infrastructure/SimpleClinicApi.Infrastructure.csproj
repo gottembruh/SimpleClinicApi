@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="AutoMapper" Version="15.0.1" />
+      <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
       <PackageReference Include="MediatR" Version="13.0.0" />
       <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="6.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
@@ -18,8 +19,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Commands\" />
-      <Folder Include="Handlers\" />
       <Folder Include="Validators\" />
     </ItemGroup>
 

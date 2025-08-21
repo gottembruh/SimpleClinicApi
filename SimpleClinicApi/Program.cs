@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using SimpleClinicApi.DataAccess;
 using SimpleClinicApi.Extensions;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
+using SimpleClinicApi.Infrastructure.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -27,6 +28,8 @@ switch (databaseProvider)
    default:
       throw new Exception("Unsupported database provider");
 }
+builder.Services.AddLocalization(x => x.ResourcesPath = "Resources");
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
        .AddEntityFrameworkStores<ClinicDbContext>()
@@ -73,6 +76,7 @@ if (app.Environment.IsDevelopment())
    app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

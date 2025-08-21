@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using SimpleClinicApi.DataAccess.Repositories;
 using SimpleClinicApi.Infrastructure;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
 using SimpleClinicApi.Infrastructure.Auth.Mappers;
@@ -15,6 +16,14 @@ namespace SimpleClinicApi.Extensions
          services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
          services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbContextTransactionPipelineBehavior<,>));
          services.AddValidatorsFromAssemblyContaining<RegisterUserCommand>();
+
+         services.AddScoped<IPatientRepository, PatientRepository>();
+         services.AddScoped<IDoctorRepository, DoctorRepository>();
+         services.AddScoped<IVisitRepository, VisitRepository>();
+         services.AddScoped<IProcedureRepository, ProcedureRepository>();
+         services.AddScoped<IMedicationRepository, MedicationRepository>();
+         services.AddScoped<IVisitProcedureRepository, VisitProcedureRepository>();
+         services.AddScoped<IVisitMedicationRepository, VisitMedicationRepository>();
 
          services.AddAutoMapper(cfg =>
                                 {

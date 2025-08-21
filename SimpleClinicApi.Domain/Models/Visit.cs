@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace SimpleClinicApi.Domain.Models
 {
@@ -11,7 +12,7 @@ namespace SimpleClinicApi.Domain.Models
       {
          get;
          init;
-      }= Guid.NewGuid();
+      } = Guid.NewGuid();
 
       [Required]
       public DateTime VisitDate
@@ -53,22 +54,26 @@ namespace SimpleClinicApi.Domain.Models
          init;
       } = null!;
 
-      public ICollection<VisitProcedure>? VisitProcedures
+      public ICollection<VisitProcedure> VisitProcedures
       {
          get;
          init;
-      }
+      } = new List<VisitProcedure>();
 
-      public ICollection<VisitMedication>? VisitMedications
+      public ICollection<VisitMedication> VisitMedications
       {
          get;
          init;
-      }
+      } = new List<VisitMedication>();
 
       public bool IsCompleted
       {
          get;
-         set;
+         init;
       }
+
+      public IEnumerable<Guid> ProceduresIds => VisitProcedures.Select(x => x.ProcedureId);
+
+      public IEnumerable<Guid> MedicationsIds => VisitMedications.Select(x => x.MedicationId);
    }
 }
