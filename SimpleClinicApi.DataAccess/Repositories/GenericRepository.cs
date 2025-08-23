@@ -23,7 +23,7 @@ namespace SimpleClinicApi.DataAccess.Repositories
          return await _dbSet.FindAsync([id], cancellationToken);
       }
 
-      public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
+      public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
       {
          await _dbSet.AddAsync(entity, cancellationToken);
       }

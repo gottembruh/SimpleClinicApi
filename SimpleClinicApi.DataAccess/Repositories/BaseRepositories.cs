@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using SimpleClinicApi.Domain.Models;
 
@@ -15,7 +16,14 @@ namespace SimpleClinicApi.DataAccess.Repositories
       public IQueryable<Visit> GetAllWithDependencies();
    }
 
-   public interface IProcedureRepository : IRepository<Procedure>;
+   public interface IProcedureRepository : IRepository<Procedure>
+   {
+      public Task<(Procedure MostPopular, int MostPopularCount, Procedure LeastPopular, int LeastPopularCount)>
+         GetPopularityStatsAsync(CancellationToken cancellationToken = default);
+
+      public Task<ILookup<Procedure, Patient>> GetProceduresWithPatientsLookupAsync(
+         CancellationToken cancellationToken = default);
+   }
 
    public interface IMedicationRepository : IRepository<Medication>;
 

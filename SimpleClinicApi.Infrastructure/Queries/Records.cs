@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using MediatR;
 using SimpleClinicApi.Infrastructure.Dtos;
@@ -13,12 +14,18 @@ namespace SimpleClinicApi.Infrastructure.Queries
       public record GetPatientsQuery : IRequest<IEnumerable<PatientDto>>;
 
       [UsedImplicitly]
-      public record PatientWithAllDetails(Guid Id) : IRequest<PatientDto?>;
+      public record PatientWithAllDetailsQuery(Guid Id) : IRequest<PatientDto?>;
 
+      [UsedImplicitly]
+      public record GetProcedureToPatientsQuery : IRequest<ILookup<ProcedureDto, PatientDto>>;
 
+      [UsedImplicitly]
+      public record GetProcedurePopularityDataQuery : IRequest<ProcedurePopularityStatsDto>;
+
+      [UsedImplicitly]
       public record GetVisitsQuery(int? Limit, int? Offset) : IRequest<VisitDto>;
 
+      [UsedImplicitly]
+      public record GetProceduresQuery : IRequest<IEnumerable<ProcedureDto>>;
    }
-
-
 }

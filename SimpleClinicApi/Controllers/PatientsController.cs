@@ -1,26 +1,25 @@
-﻿using System.Net;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleClinicApi.Infrastructure.Commands;
 using SimpleClinicApi.Infrastructure.Dtos;
-using SimpleClinicApi.Infrastructure.Errors;
 using SimpleClinicApi.Infrastructure.Queries;
 
 namespace SimpleClinicApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-// [Authorize]
+[Authorize]
 public class PatientsController(IMediator mediator) : ControllerBase
 {
    [HttpGet]
    public Task<IEnumerable<PatientDto>> Get() =>
       mediator.Send(new Query.GetPatientsQuery());
 
+   [AllowAnonymous]
    [HttpGet("{id:guid}")]
    public async Task<PatientDto?> Get(Guid id) =>
-      await mediator.Send(new Query.PatientWithAllDetails(id));
+      await mediator.Send(new Query.PatientWithAllDetailsQuery(id));
 
    [HttpPost]
    public Task<Guid> Create(CreateUpdatePatientDto dto) =>

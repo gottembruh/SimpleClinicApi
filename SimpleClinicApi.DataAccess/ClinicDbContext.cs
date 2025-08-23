@@ -209,7 +209,6 @@ namespace SimpleClinicApi.DataAccess
             return;
          }
 
-         // Patients
          var patient1 = new Patient
          {
             FullName = "Ivan Ivanov",
@@ -234,12 +233,10 @@ namespace SimpleClinicApi.DataAccess
             Address = "Novosibirsk, Sovetskaya St, 5"
          };
 
-         await context.Patients.AddRangeAsync(new[]
-         {
+         await context.Patients.AddRangeAsync([
             patient1, patient2, patient3
-         }, cancellationToken);
+         ], cancellationToken);
 
-         // Doctors
          var doctor1 = new Doctor
          {
             FullName = "Dr. Sergey Smirnov",
@@ -266,7 +263,6 @@ namespace SimpleClinicApi.DataAccess
             doctor1, doctor2, doctor3
          }, cancellationToken);
 
-         // Procedures
          var proc1 = new Procedure
          {
             Name = "Complete Blood Count",
@@ -293,7 +289,6 @@ namespace SimpleClinicApi.DataAccess
             proc1, proc2, proc3
          }, cancellationToken);
 
-         // Medications
          var med1 = new Medication
          {
             Name = "Ibuprofen",
@@ -315,14 +310,12 @@ namespace SimpleClinicApi.DataAccess
             Cost = 150m
          };
 
-         await context.Medications.AddRangeAsync(new[]
-         {
+         await context.Medications.AddRangeAsync([
             med1, med2, med3
-         }, cancellationToken);
+         ], cancellationToken);
 
          await context.SaveChangesAsync(cancellationToken);
 
-         // Visits with new IsCompleted field
          var visit1 = new Visit
          {
             PatientId = patient1.Id,
@@ -350,10 +343,9 @@ namespace SimpleClinicApi.DataAccess
             IsCompleted = true
          };
 
-         await context.Visits.AddRangeAsync(new[]
-         {
+         await context.Visits.AddRangeAsync([
             visit1, visit2, visit3
-         }, cancellationToken);
+         ], cancellationToken);
 
          await context.SaveChangesAsync(cancellationToken);
 
@@ -409,10 +401,9 @@ namespace SimpleClinicApi.DataAccess
             Notes = "If fever persists"
          };
 
-         await context.VisitMedications.AddRangeAsync(new[]
-         {
+         await context.VisitMedications.AddRangeAsync([
             vm1, vm2, vm3
-         }, cancellationToken);
+         ], cancellationToken);
 
          await context.SaveChangesAsync(cancellationToken);
       }

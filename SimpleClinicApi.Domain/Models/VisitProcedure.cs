@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SimpleClinicApi.Domain.Models
 {
-   public class VisitProcedure
+   public class VisitProcedure : IEquatable<VisitProcedure>
    {
       [Key]
       public Guid Id
@@ -44,5 +44,44 @@ namespace SimpleClinicApi.Domain.Models
          get;
          init;
       }
+
+      #region Equality members
+
+      public bool Equals(VisitProcedure? other)
+      {
+         if (other is null)
+         {
+            return false;
+         }
+
+         if (ReferenceEquals(this, other))
+         {
+            return true;
+         }
+
+         return Id.Equals(other.Id) && VisitId.Equals(other.VisitId) && ProcedureId.Equals(other.ProcedureId);
+      }
+
+      public override bool Equals(object? obj)
+      {
+         if (obj is null)
+         {
+            return false;
+         }
+
+         if (ReferenceEquals(this, obj))
+         {
+            return true;
+         }
+
+         return obj.GetType() == GetType() && Equals((VisitProcedure)obj);
+      }
+
+      public override int GetHashCode()
+      {
+         return HashCode.Combine(Id, VisitId, ProcedureId);
+      }
+
+      #endregion
    }
 }

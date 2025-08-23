@@ -14,9 +14,9 @@ using SimpleClinicApi.Infrastructure.Queries;
 namespace SimpleClinicApi.Infrastructure.Handlers
 {
    public class GetPatientByIdQueryHandler(IPatientRepository repository, IMapper mapper)
-      : IRequestHandler<Query.PatientWithAllDetails, PatientDto>
+      : IRequestHandler<Query.PatientWithAllDetailsQuery, PatientDto>
    {
-      public async Task<PatientDto> Handle(Query.PatientWithAllDetails request, CancellationToken cancellationToken)
+      public async Task<PatientDto> Handle(Query.PatientWithAllDetailsQuery request, CancellationToken cancellationToken)
       {
          var patient = await repository.GetByIdAsync(request.Id, cancellationToken);
 

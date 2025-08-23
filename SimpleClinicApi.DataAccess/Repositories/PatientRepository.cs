@@ -10,14 +10,24 @@ namespace SimpleClinicApi.DataAccess.Repositories
    public class PatientRepository(ClinicDbContext context)
       : GenericRepository<Patient, ClinicDbContext>(context), IPatientRepository
    {
+      public override async Task AddAsync(Patient entity, CancellationToken cancellationToken = default)
+      {
+         var isDuplicated = await _dbSet.AnyAsync(p => p.Equals(entity), cancellationToken: cancellationToken);
+
+         if (isDuplicated)
+         {
+            throw new InvalidOperationException($"Patient with id {entity.Id} already exists.");
+         }
+
+         await base.AddAsync(entity, cancellationToken);
+      }
+
       public override async Task<IEnumerable<Patient>> GetAllAsync(CancellationToken cancellationToken = default)
       {
          return await _dbSet.Include(x => x.Visits)
                             .AsNoTracking()
                             .ToListAsync(cancellationToken: cancellationToken);
       }
-
-
 
       public override async Task<Patient?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
       {

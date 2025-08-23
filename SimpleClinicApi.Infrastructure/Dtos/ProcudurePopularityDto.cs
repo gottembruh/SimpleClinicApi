@@ -1,16 +1,15 @@
 ﻿using JetBrains.Annotations;
-using SimpleClinicApi.Domain.Models;
 
 namespace SimpleClinicApi.Infrastructure.Dtos
 {
    [UsedImplicitly]
-   public class ProcudurePopularityDto
+   public class ProcedurePopularityStatsDto
    {
-      public Procedure MostPopular
+      public ProcedureDto MostPopular
       {
          get;
          set;
-      }
+      } = null!;
 
       public int MostPopularCount
       {
@@ -18,11 +17,11 @@ namespace SimpleClinicApi.Infrastructure.Dtos
          set;
       }
 
-      public Procedure LeastPopular
+      public ProcedureDto LeastPopular
       {
          get;
          set;
-      }
+      } = null!;
 
       public int LeastPopularCount
       {
