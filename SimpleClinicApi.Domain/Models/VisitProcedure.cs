@@ -10,7 +10,7 @@ namespace SimpleClinicApi.Domain.Models
       {
          get;
          init;
-      } = Guid.NewGuid();
+      }
 
       [Required]
       public Guid VisitId
@@ -29,7 +29,7 @@ namespace SimpleClinicApi.Domain.Models
       public Guid ProcedureId
       {
          get;
-         init;
+         set;
       }
 
       public Procedure Procedure
@@ -42,7 +42,7 @@ namespace SimpleClinicApi.Domain.Models
       public string? Notes
       {
          get;
-         init;
+         set;
       }
 
       #region Equality members
@@ -74,7 +74,7 @@ namespace SimpleClinicApi.Domain.Models
             return true;
          }
 
-         return obj.GetType() == GetType() && Equals((VisitProcedure)obj);
+         return obj.GetType() == GetType() && Equals((VisitProcedure) obj);
       }
 
       public override int GetHashCode()

@@ -24,4 +24,13 @@ namespace SimpleClinicApi.Infrastructure.Commands
 
    [UsedImplicitly]
    public record DeleteProcedureCommand(Guid Id) : IRequest;
+
+   [UsedImplicitly]
+   public record CreateVisitCommand(CreateUpdateVisitDto Dto) : IRequest<VisitDto>;
+
+   [UsedImplicitly]
+   public record UpdateVisitCommand(Guid Id, CreateUpdateVisitDto Dto) : IRequest<VisitDto>;
+
+   [UsedImplicitly]
+   public record DeleteVisitCommand(Guid Id) : IRequest;
 }

@@ -18,14 +18,14 @@ namespace SimpleClinicApi.Infrastructure.Auth.Handlers
    {
       public async Task<AuthResponseDto> Handle(LoginUserCommand request, CancellationToken cancellationToken)
       {
-         var user = await userManager.FindByNameAsync(request.LoginDto.UserName);
+         var user = await userManager.FindByNameAsync(request.LoginDto.UserName!);
 
          if (user == null)
          {
             throw new RestException(HttpStatusCode.Unauthorized,"Invalid username or password");
          }
 
-         var result = await signInManager.CheckPasswordSignInAsync(user, request.LoginDto.Password, false);
+         var result = await signInManager.CheckPasswordSignInAsync(user, request.LoginDto.Password!, false);
 
          if (!result.Succeeded)
          {
@@ -34,11 +34,8 @@ namespace SimpleClinicApi.Infrastructure.Auth.Handlers
 
          var token = tokenGenerator.GenerateJwtToken(user);
 
-         return new AuthResponseDto
-         {
-            Token = token,
-            UserName = user.UserName!
-         };
+         return new AuthResponseDto(token, user.UserName!);
+
       }
    }
 }

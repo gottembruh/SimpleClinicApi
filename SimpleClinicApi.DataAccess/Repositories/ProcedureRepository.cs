@@ -37,7 +37,7 @@ namespace SimpleClinicApi.DataAccess.Repositories
          return (mostPopular, maxGroup.Count, leastPopular, minGroup.Count);
       }
 
-      public async Task<ILookup<Procedure, Patient>> GetProceduresWithPatientsLookupAsync(
+      public async Task<ILookup<Procedure, Patient>> GetProceduresToPatientsLookupAsync(
          CancellationToken cancellationToken = default)
       {
          var visitProcedures = await _context.VisitProcedures
@@ -49,6 +49,11 @@ namespace SimpleClinicApi.DataAccess.Repositories
          var lookup = visitProcedures.ToLookup(vp => vp.Procedure, vp => vp.Visit.Patient);
 
          return lookup;
+      }
+
+      public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
+      {
+         return _dbSet.AnyAsync( p =>  p.Id == id , cancellationToken);
       }
    }
 }

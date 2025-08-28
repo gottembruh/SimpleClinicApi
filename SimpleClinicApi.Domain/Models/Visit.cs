@@ -18,14 +18,14 @@ namespace SimpleClinicApi.Domain.Models
       public DateTime VisitDate
       {
          get;
-         init;
+         set;
       }
 
       [MaxLength(500)]
       public string? Notes
       {
          get;
-         init;
+         set;
       }
 
       [Required]
@@ -45,7 +45,7 @@ namespace SimpleClinicApi.Domain.Models
       public Guid DoctorId
       {
          get;
-         init;
+         set;
       }
 
       public Doctor Doctor

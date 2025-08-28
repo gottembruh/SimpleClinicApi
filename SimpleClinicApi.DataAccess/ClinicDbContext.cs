@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage;
 using SimpleClinicApi.Domain.Models;
 
@@ -190,6 +191,7 @@ namespace SimpleClinicApi.DataAccess
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
          optionsBuilder.UseSqlite("Data Source=clinic.db")
+                       // .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
                        .UseSeeding(Seed)
                        // Seed data asynchronously inside UseAsyncSeeding (EF Core 9)
                        .UseAsyncSeeding(SeedAsync);

@@ -11,11 +11,7 @@ public class LoginUserCommandValidatorTests
 
    private LoginUserCommand CreateCommand(string userName, string password)
    {
-      return new LoginUserCommand(new LoginDto
-      {
-         UserName = userName,
-         Password = password
-      });
+      return new LoginUserCommand(new LoginDto(UserName: userName, Password: password));
    }
 
    [Fact]

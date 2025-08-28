@@ -10,7 +10,7 @@ namespace SimpleClinicApi.Domain.Models
       {
          get;
          init;
-      } = Guid.NewGuid();
+      }
 
       [Required]
       public Guid VisitId
@@ -29,7 +29,7 @@ namespace SimpleClinicApi.Domain.Models
       public Guid MedicationId
       {
          get;
-         init;
+         set;
       }
 
       public Medication Medication
@@ -42,14 +42,14 @@ namespace SimpleClinicApi.Domain.Models
       public string Dosage
       {
          get;
-         init;
+         set;
       } = null!;
 
       [MaxLength(500)]
       public string? Notes
       {
          get;
-         init;
+         set;
       }
    }
 }

@@ -14,7 +14,7 @@ namespace SimpleClinicApi.Extensions
       {
          services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<RegisterUserCommand>());
          services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbContextTransactionPipelineBehavior<,>));
+         // services.AddScoped(typeof(IPipelineBehavior<,>), typeof(DbContextTransactionPipelineBehavior<,>));
          services.AddValidatorsFromAssemblyContaining<RegisterUserCommand>();
 
          services.AddScoped<IPatientRepository, PatientRepository>();
@@ -22,8 +22,6 @@ namespace SimpleClinicApi.Extensions
          services.AddScoped<IVisitRepository, VisitRepository>();
          services.AddScoped<IProcedureRepository, ProcedureRepository>();
          services.AddScoped<IMedicationRepository, MedicationRepository>();
-         services.AddScoped<IVisitProcedureRepository, VisitProcedureRepository>();
-         services.AddScoped<IVisitMedicationRepository, VisitMedicationRepository>();
 
          services.AddAutoMapper(cfg =>
                                 {

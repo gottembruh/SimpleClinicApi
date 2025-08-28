@@ -27,12 +27,12 @@ public class GetProcedurePopularityStatsHandler(IProcedureRepository procedureRe
       }
 
       return new ProcedurePopularityStatsDto
-      {
-         MostPopular = mapper.Map<ProcedureDto>(mostPopular),
-         MostPopularCount = mostCount,
-         LeastPopular = mapper.Map<ProcedureDto>(leastPopular),
-         LeastPopularCount = leastCount
-      };
+         (
+          mapper.Map<ProcedureDto>(mostPopular),
+          mostCount,
+          mapper.Map<ProcedureDto>(leastPopular),
+          leastCount
+         );
    }
 }
 
@@ -42,7 +42,7 @@ public class GetProcedureToPatientsHandler(IProcedureRepository repository, IMap
    public async Task<ILookup<ProcedureDto, PatientDto>> Handle(Query.GetProcedureToPatientsQuery request,
                                                                CancellationToken cancellationToken)
    {
-      var lookup = await repository.GetProceduresWithPatientsLookupAsync(cancellationToken);
+      var lookup = await repository.GetProceduresToPatientsLookupAsync(cancellationToken);
       var mappedLookup = lookup.ToLookup(kvp => mapper.Map<ProcedureDto>(kvp.Key), mapper.Map<PatientDto>);
 
       return mappedLookup;

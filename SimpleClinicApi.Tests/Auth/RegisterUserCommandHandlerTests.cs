@@ -8,6 +8,8 @@ using SimpleClinicApi.Infrastructure.Auth.Handlers;
 using SimpleClinicApi.Infrastructure.Auth.Utilities;
 using SimpleClinicApi.Infrastructure.Errors;
 
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+
 namespace SimpleClinicApi.Tests.Auth;
 
 public class RegisterUserCommandHandlerTests
@@ -42,12 +44,7 @@ public class RegisterUserCommandHandlerTests
                                                    tokenGeneratorMock.Object,
                                                    mapperMock.Object);
 
-      var command = new RegisterUserCommand(new RegisterDto
-      {
-         UserName = "testuser",
-         Email = "test@mail.com",
-         Password = "Qq!12345"
-      });
+      var command = new RegisterUserCommand(new RegisterDto("testuser", "test@mail.com", "Qq!12345"));
 
       var result = await handler.Handle(command, CancellationToken.None);
 
@@ -83,17 +80,10 @@ public class RegisterUserCommandHandlerTests
 
       var tokenGeneratorMock = new Mock<IJwtTokenGenerator>();
 
-      var handler = new RegisterUserCommandHandler(
-                                                   userManagerMock.Object,
-                                                   tokenGeneratorMock.Object,
-                                                   mapperMock.Object);
+      var handler = new RegisterUserCommandHandler(userManagerMock.Object, tokenGeneratorMock.Object, mapperMock.Object);
 
-      var command = new RegisterUserCommand(new RegisterDto
-      {
-         UserName = "testuser",
-         Email = "test@mail.com",
-         Password = "Qq!12345"
-      });
+      var command =
+         new RegisterUserCommand(new RegisterDto(UserName: "testuser", Email: "test@mail.com", Password: "Qq!12345"));
 
       var action = () => handler.Handle(command, CancellationToken.None);
 

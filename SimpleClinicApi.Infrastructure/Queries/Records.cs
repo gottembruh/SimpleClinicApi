@@ -20,6 +20,9 @@ namespace SimpleClinicApi.Infrastructure.Queries
       public record GetProcedureToPatientsQuery : IRequest<ILookup<ProcedureDto, PatientDto>>;
 
       [UsedImplicitly]
+      public record GetPatientToVisitsQuery : IRequest<ILookup<PatientDto, VisitDto>>;
+
+      [UsedImplicitly]
       public record GetProcedurePopularityDataQuery : IRequest<ProcedurePopularityStatsDto>;
 
       [UsedImplicitly]

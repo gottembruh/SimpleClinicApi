@@ -37,11 +37,8 @@ namespace SimpleClinicApi.Infrastructure.Auth.Handlers
 
          var token = tokenGenerator.GenerateJwtToken(user);
 
-         return new AuthResponseDto
-         {
-            Token = token,
-            UserName = user.UserName!
-         };
+         return new AuthResponseDto(token, user.UserName!);
+
       }
    }
 }

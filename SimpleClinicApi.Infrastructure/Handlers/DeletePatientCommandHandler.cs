@@ -20,6 +20,7 @@ namespace SimpleClinicApi.Infrastructure.Handlers
          }
 
          repository.Remove(patient);
+
          await repository.SaveChangesAsync(cancellationToken);
       }
    }

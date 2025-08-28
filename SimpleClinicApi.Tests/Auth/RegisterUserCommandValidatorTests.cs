@@ -11,12 +11,7 @@ namespace SimpleClinicApi.Tests.Auth
 
       private RegisterUserCommand CreateCommand(string userName, string email, string password)
       {
-         return new RegisterUserCommand(new RegisterDto
-         {
-            UserName = userName,
-            Email = email,
-            Password = password
-         });
+         return new RegisterUserCommand(new RegisterDto(UserName: userName, Email: email, Password: password));
       }
 
       [Fact]

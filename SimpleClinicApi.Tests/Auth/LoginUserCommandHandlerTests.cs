@@ -7,6 +7,8 @@ using SimpleClinicApi.Infrastructure.Auth.Handlers;
 using SimpleClinicApi.Infrastructure.Auth.Utilities;
 using SimpleClinicApi.Infrastructure.Errors;
 
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+
 namespace SimpleClinicApi.Tests.Auth;
 
 public class LoginUserCommandHandlerTests
@@ -44,11 +46,7 @@ public class LoginUserCommandHandlerTests
                                                 signInManagerMock.Object,
                                                 tokenGeneratorMock.Object);
 
-      var command = new LoginUserCommand(new LoginDto
-      {
-         UserName = "testuser",
-         Password = "Password1"
-      });
+      var command = new LoginUserCommand(new LoginDto(UserName: "testuser", Password: "Password1"));
 
       var result = await handler.Handle(command, CancellationToken.None);
 
@@ -80,11 +78,7 @@ public class LoginUserCommandHandlerTests
                                                 signInManagerMock.Object,
                                                 tokenGeneratorMock.Object);
 
-      var command = new LoginUserCommand(new LoginDto
-      {
-         UserName = "baduser",
-         Password = "Password1"
-      });
+      var command = new LoginUserCommand(new LoginDto(UserName: "baduser", Password: "Password1"));
 
       var action = () => handler.Handle(command, CancellationToken.None);
 
@@ -119,16 +113,10 @@ public class LoginUserCommandHandlerTests
 
       var tokenGeneratorMock = new Mock<IJwtTokenGenerator>();
 
-      var handler = new LoginUserCommandHandler(
-                                                userManagerMock.Object,
-                                                signInManagerMock.Object,
-                                                tokenGeneratorMock.Object);
+      var handler =
+         new LoginUserCommandHandler(userManagerMock.Object, signInManagerMock.Object, tokenGeneratorMock.Object);
 
-      var command = new LoginUserCommand(new LoginDto
-      {
-         UserName = "testuser",
-         Password = "badpassword"
-      });
+      var command = new LoginUserCommand(new LoginDto(UserName: "testuser", Password: "badpassword"));
 
       var action = () => handler.Handle(command, CancellationToken.None);
 
