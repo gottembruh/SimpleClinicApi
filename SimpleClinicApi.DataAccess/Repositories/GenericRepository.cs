@@ -13,12 +13,12 @@ namespace SimpleClinicApi.DataAccess.Repositories
       protected readonly TContext _context = context;
       protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
-      public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default)
+      public async Task<IEnumerable<TEntity>> GetAllWithoutNavPropsAsync(CancellationToken cancellationToken = default)
       {
          return await _dbSet.ToListAsync(cancellationToken);
       }
 
-      public virtual async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+      public async Task<TEntity?> GetByIdWithoutNavPropsAsync(Guid id, CancellationToken cancellationToken = default)
       {
          return await _dbSet.FindAsync([id], cancellationToken);
       }

@@ -12,7 +12,7 @@ namespace SimpleClinicApi.Infrastructure.Handlers
    {
       public async Task Handle(DeletePatientCommand request, CancellationToken cancellationToken)
       {
-         var patient = await repository.GetByIdAsync(request.Id, cancellationToken);
+         var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken);
 
          if (patient == null)
          {
@@ -21,22 +21,6 @@ namespace SimpleClinicApi.Infrastructure.Handlers
 
          repository.Remove(patient);
 
-         await repository.SaveChangesAsync(cancellationToken);
-      }
-   }
-
-   public class DeleteProcedureCommandHandler(IProcedureRepository repository) : IRequestHandler<DeleteProcedureCommand>
-   {
-      public async Task Handle(DeleteProcedureCommand request, CancellationToken cancellationToken)
-      {
-         var patient = await repository.GetByIdAsync(request.Id, cancellationToken);
-
-         if (patient == null)
-         {
-            throw new RestException(HttpStatusCode.NotFound, $"Procedure with id {request.Id} not found.");
-         }
-
-         repository.Remove(patient);
          await repository.SaveChangesAsync(cancellationToken);
       }
    }

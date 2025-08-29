@@ -18,14 +18,11 @@ namespace SimpleClinicApi.Infrastructure.Handlers
    {
       public async Task<PatientDto> Handle(Query.PatientWithAllDetailsQuery request, CancellationToken cancellationToken)
       {
-         var patient = await repository.GetByIdAsync(request.Id, cancellationToken);
+         var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken);
 
-         if (patient == null)
-         {
-            throw new RestException(HttpStatusCode.NotFound, $"Patient with id {request.Id} not found.");
-         }
-
-         return mapper.Map<PatientDto>(patient);
+         return patient == null ?
+            throw new RestException(HttpStatusCode.NotFound, $"Patient with id {request.Id} not found.") :
+            mapper.Map<PatientDto>(patient);
       }
    }
 }

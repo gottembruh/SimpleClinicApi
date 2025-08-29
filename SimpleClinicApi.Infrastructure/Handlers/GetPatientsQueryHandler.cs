@@ -15,7 +15,7 @@ namespace SimpleClinicApi.Infrastructure.Handlers
    {
       public async Task<IEnumerable<PatientDto>> Handle(Query.GetPatientsQuery request, CancellationToken cancellationToken)
       {
-         var patients = await repository.GetAllAsync(cancellationToken);
+         var patients = await repository.GetAllWithoutNavPropsAsync(cancellationToken);
 
          return mapper.Map<IEnumerable<PatientDto>>(patients);
       }

@@ -22,14 +22,14 @@ namespace SimpleClinicApi.DataAccess.Repositories
          await base.AddAsync(entity, cancellationToken);
       }
 
-      public override async Task<IEnumerable<Patient>> GetAllAsync(CancellationToken cancellationToken = default)
+      public async Task<IEnumerable<Patient>> GetAllWithVisitsAsync(CancellationToken cancellationToken = default)
       {
          return await _dbSet.Include(x => x.Visits)
                             .AsNoTracking()
                             .ToListAsync(cancellationToken: cancellationToken);
       }
 
-      public override async Task<Patient?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+      public async Task<Patient?> GetByIdWholeAsync(Guid id, CancellationToken cancellationToken = default)
       {
          return await _context.Patients
                               .Include(p => p.Visits)

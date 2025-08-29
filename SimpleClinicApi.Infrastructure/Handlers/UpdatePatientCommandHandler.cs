@@ -15,7 +15,7 @@ namespace SimpleClinicApi.Infrastructure.Handlers
    {
       public async Task Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
       {
-         var patient = await repository.GetByIdAsync(request.Id, cancellationToken);
+         var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken);
 
          if (patient == null)
          {

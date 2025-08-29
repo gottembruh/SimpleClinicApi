@@ -7,11 +7,11 @@ namespace SimpleClinicApi.DataAccess.Repositories
 {
    public interface IRepository<TEntity> where TEntity : class
    {
-      Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
-      Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-      Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
-      void Update(TEntity entity);
-      void Remove(TEntity entity);
-      Task SaveChangesAsync(CancellationToken cancellationToken = default);
+      public Task<IEnumerable<TEntity>> GetAllWithoutNavPropsAsync(CancellationToken cancellationToken = default);
+      public Task<TEntity?> GetByIdWithoutNavPropsAsync(Guid id, CancellationToken cancellationToken = default);
+      public Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+      public void Update(TEntity entity);
+      public void Remove(TEntity entity);
+      public Task SaveChangesAsync(CancellationToken cancellationToken = default);
    }
 }

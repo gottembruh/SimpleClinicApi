@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -7,7 +8,11 @@ using SimpleClinicApi.Domain.Models;
 
 namespace SimpleClinicApi.DataAccess.Repositories
 {
-   public interface IPatientRepository : IRepository<Patient>;
+   public interface IPatientRepository : IRepository<Patient>
+   {
+      public Task<IEnumerable<Patient>> GetAllWithVisitsAsync(CancellationToken cancellationToken = default);
+      public Task<Patient?> GetByIdWholeAsync(Guid id, CancellationToken cancellationToken = default);
+   }
 
    public interface IDoctorRepository : IRepository<Doctor>
    {
