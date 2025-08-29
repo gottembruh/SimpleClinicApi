@@ -45,7 +45,7 @@ public class ErrorHandlingMiddleware(
         {
             case RestException re:
                 context.Response.StatusCode = (int)re.Code;
-                result = JsonSerializer.Serialize(new { errors = (string)re.Errors! });
+                result = JsonSerializer.Serialize(new { errors = re.Errors! });
                 break;
             default:
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
