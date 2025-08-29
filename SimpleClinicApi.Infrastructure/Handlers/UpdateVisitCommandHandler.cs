@@ -36,7 +36,7 @@ public class UpdateVisitCommandHandler(
 
       var doctorId = request.Dto.DoctorId;
 
-      if (doctorId != visit.DoctorId)
+      if (doctorId != visit.DoctorId && doctorId != Guid.Empty)
       {
          var doctorExists = await doctorRepository.ExistsAsync(doctorId, cancellationToken);
 
@@ -77,7 +77,11 @@ public class UpdateVisitCommandHandler(
 
       visit.Notes = request.Dto.Notes ?? visit.Notes;
       visit.VisitDate = request.Dto.VisitDate;
-      visit.DoctorId = doctorId;
+
+      if (doctorId != Guid.Empty)
+      {
+         visit.DoctorId = doctorId;
+      }
 
       var procedures = (request.Dto.VisitProcedures ?? [])
          .Select(dto => new VisitProcedure
@@ -98,14 +102,22 @@ public class UpdateVisitCommandHandler(
             VisitId = visit.Id
          });
 
+      // we use DbContextTransactionPipelineBehavior (mediatr lib stuff) here, so can make savepoints inside transaction with call SaveChangesAsync
+      await visitRepository.SaveChangesAsync(cancellationToken);
+
       IEnumerable<VisitProcedure> proceduresToKeep = procedures as VisitProcedure[] ?? procedures.ToArray();
       IEnumerable<VisitMedication> medicationsToKeep = medications as VisitMedication[] ?? medications.ToArray();
 
       visitRepository.RemoveVisitProcedures(visit, proceduresToKeep);
       visitRepository.RemoveVisitMedications(visit, medicationsToKeep);
+
+      // same
+      await visitRepository.SaveChangesAsync(cancellationToken);
+
       await visitRepository.AddOrUpdateVisitProceduresAsync(visit, proceduresToKeep, cancellationToken);
       await visitRepository.AddOrUpdateVisitMedicationsAsync(visit, medicationsToKeep, cancellationToken);
 
+      // same
       await visitRepository.SaveChangesAsync(cancellationToken);
 
       var updatedVisit = await visitRepository.GetVisitWithDetailsAsync(visit.Id, cancellationToken);

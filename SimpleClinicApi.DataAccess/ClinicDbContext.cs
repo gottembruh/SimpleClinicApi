@@ -193,7 +193,6 @@ namespace SimpleClinicApi.DataAccess
          optionsBuilder.UseSqlite("Data Source=clinic.db")
                        // .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
                        .UseSeeding(Seed)
-                       // Seed data asynchronously inside UseAsyncSeeding (EF Core 9)
                        .UseAsyncSeeding(SeedAsync);
       }
 
@@ -260,10 +259,9 @@ namespace SimpleClinicApi.DataAccess
             PhoneNumber = "+7 914 456 78 90"
          };
 
-         await context.Doctors.AddRangeAsync(new[]
-         {
+         await context.Doctors.AddRangeAsync([
             doctor1, doctor2, doctor3
-         }, cancellationToken);
+         ], cancellationToken);
 
          var proc1 = new Procedure
          {
@@ -286,10 +284,9 @@ namespace SimpleClinicApi.DataAccess
             Cost = 1200m
          };
 
-         await context.Procedures.AddRangeAsync(new[]
-         {
+         await context.Procedures.AddRangeAsync([
             proc1, proc2, proc3
-         }, cancellationToken);
+         ], cancellationToken);
 
          var med1 = new Medication
          {
@@ -351,7 +348,6 @@ namespace SimpleClinicApi.DataAccess
 
          await context.SaveChangesAsync(cancellationToken);
 
-         // VisitProcedures assignments
          var vp1 = new VisitProcedure
          {
             VisitId = visit1.Id,
@@ -373,12 +369,10 @@ namespace SimpleClinicApi.DataAccess
             Notes = "For heart rhythm evaluation"
          };
 
-         await context.VisitProcedures.AddRangeAsync(new[]
-         {
+         await context.VisitProcedures.AddRangeAsync([
             vp1, vp2, vp3
-         }, cancellationToken);
+         ], cancellationToken);
 
-         // VisitMedications assignments
          var vm1 = new VisitMedication
          {
             VisitId = visit1.Id,
