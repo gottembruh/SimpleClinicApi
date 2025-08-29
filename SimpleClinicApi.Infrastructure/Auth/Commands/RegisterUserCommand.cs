@@ -1,4 +1,5 @@
 using MediatR;
+using SimpleClinicApi.Infrastructure.Auth.Dtos;
 
 namespace SimpleClinicApi.Infrastructure.Auth.Commands
 {

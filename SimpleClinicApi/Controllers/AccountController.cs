@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimpleClinicApi.Infrastructure.Auth;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
+using SimpleClinicApi.Infrastructure.Auth.Dtos;
 
 namespace SimpleClinicApi.Controllers
 {

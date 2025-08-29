@@ -2,6 +2,7 @@
 using SimpleClinicApi.Infrastructure.Auth.Validators;
 using FluentValidation.TestHelper;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
+using SimpleClinicApi.Infrastructure.Auth.Dtos;
 
 namespace SimpleClinicApi.Tests.Auth
 {

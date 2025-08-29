@@ -7,6 +7,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
+using SimpleClinicApi.Infrastructure.Auth.Dtos;
 using SimpleClinicApi.Infrastructure.Auth.Utilities;
 using SimpleClinicApi.Infrastructure.Errors;
 

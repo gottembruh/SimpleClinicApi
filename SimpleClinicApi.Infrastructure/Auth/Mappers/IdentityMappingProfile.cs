@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
+using SimpleClinicApi.Infrastructure.Auth.Dtos;
 
 namespace SimpleClinicApi.Infrastructure.Auth.Mappers
 {
