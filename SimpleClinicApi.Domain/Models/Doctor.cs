@@ -2,43 +2,22 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SimpleClinicApi.Domain.Models
+namespace SimpleClinicApi.Domain.Models;
+
+public class Doctor
 {
-   public class Doctor
-   {
-      [Key]
-      public Guid Id
-      {
-         get;
-         set;
-      } = Guid.NewGuid();
+    [Key]
+    public Guid Id { get; set; } = Guid.NewGuid();
 
-      [Required]
-      [MaxLength(100)]
-      public string FullName
-      {
-         get;
-         init;
-      } = null!;
+    [Required]
+    [MaxLength(100)]
+    public string FullName { get; init; } = null!;
 
-      [MaxLength(100)]
-      public string Specialty
-      {
-         get;
-         set;
-      }
+    [MaxLength(100)]
+    public string Specialty { get; set; } = null!;
 
-      [MaxLength(15)]
-      public string PhoneNumber
-      {
-         get;
-         set;
-      }
+    [MaxLength(15)]
+    public string PhoneNumber { get; set; } = null!;
 
-      public ICollection<Visit> Visits
-      {
-         get;
-         set;
-      }
-   }
+    public ICollection<Visit>? Visits { get; set; }
 }

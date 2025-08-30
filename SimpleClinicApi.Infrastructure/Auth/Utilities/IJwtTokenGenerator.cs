@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace SimpleClinicApi.Infrastructure.Auth.Utilities
+namespace SimpleClinicApi.Infrastructure.Auth.Utilities;
+
+public interface IJwtTokenGenerator
 {
-   public interface IJwtTokenGenerator
-   {
-      public string GenerateJwtToken(IdentityUser user);
-   }
+    public string GenerateJwtToken(IdentityUser user);
 }

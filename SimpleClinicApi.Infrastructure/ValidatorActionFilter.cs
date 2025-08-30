@@ -9,31 +9,32 @@ namespace SimpleClinicApi.Infrastructure;
 
 public class ValidatorActionFilter : IActionFilter
 {
-   public void OnActionExecuting(ActionExecutingContext filterContext)
-   {
-      if (filterContext.ModelState.IsValid)
-      {
-         return;
-      }
+    public void OnActionExecuting(ActionExecutingContext filterContext)
+    {
+        if (filterContext.ModelState.IsValid)
+        {
+            return;
+        }
 
-      var result = new ContentResult();
+        var result = new ContentResult();
 
-      var errors = filterContext.ModelState!
-                                .ToDictionary<KeyValuePair<string, ModelStateEntry>, string, string
-                                   []>(valuePair => valuePair.Key,
-                                       valuePair => [.. valuePair.Value.Errors.Select(x => x.ErrorMessage)]);
+        var errors = filterContext.ModelState!.ToDictionary<
+            KeyValuePair<string, ModelStateEntry>,
+            string,
+            string[]
+        >(
+            valuePair => valuePair.Key,
+            valuePair => [.. valuePair.Value.Errors.Select(x => x.ErrorMessage)]
+        );
 
-      var content = JsonSerializer.Serialize(new
-      {
-         errors
-      });
+        var content = JsonSerializer.Serialize(new { errors });
 
-      result.Content = content;
-      result.ContentType = "application/json";
+        result.Content = content;
+        result.ContentType = "application/json";
 
-      filterContext.HttpContext.Response.StatusCode = 422; //unprocessable entity;
-      filterContext.Result = result;
-   }
+        filterContext.HttpContext.Response.StatusCode = 422; //unprocessable entity;
+        filterContext.Result = result;
+    }
 
-   public void OnActionExecuted(ActionExecutedContext filterContext) {}
+    public void OnActionExecuted(ActionExecutedContext filterContext) { }
 }

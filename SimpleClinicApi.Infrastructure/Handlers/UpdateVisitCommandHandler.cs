@@ -15,121 +15,138 @@ using SimpleClinicApi.Infrastructure.Errors;
 namespace SimpleClinicApi.Infrastructure.Handlers;
 
 public class UpdateVisitCommandHandler(
-   IVisitRepository visitRepository,
-   IDoctorRepository doctorRepository,
-   IProcedureRepository procedureRepository,
-   IMedicationRepository medicationRepository,
-   IMapper mapper)
-   : IRequestHandler<UpdateVisitCommand, VisitDto>
+    IVisitRepository visitRepository,
+    IDoctorRepository doctorRepository,
+    IProcedureRepository procedureRepository,
+    IMedicationRepository medicationRepository,
+    IMapper mapper
+) : IRequestHandler<UpdateVisitCommand, VisitDto>
 {
-   public async Task<VisitDto> Handle(UpdateVisitCommand request, CancellationToken cancellationToken)
-   {
-      var visit = await visitRepository.GetVisitWithDetailsAsync(request.Id, cancellationToken);
+    public async Task<VisitDto> Handle(
+        UpdateVisitCommand request,
+        CancellationToken cancellationToken
+    )
+    {
+        var visit = await visitRepository.GetVisitWithDetailsAsync(request.Id, cancellationToken);
 
-      if (visit == null)
-      {
-         throw new RestException(HttpStatusCode.NotFound, new
-         {
-            Visit = "Visit not found"
-         });
-      }
+        if (visit == null)
+        {
+            throw new RestException(HttpStatusCode.NotFound, new { Visit = "Visit not found" });
+        }
 
-      var doctorId = request.Dto.DoctorId;
+        var doctorId = request.Dto.DoctorId;
 
-      if (doctorId != visit.DoctorId && doctorId != Guid.Empty)
-      {
-         var doctorExists = await doctorRepository.ExistsAsync(doctorId, cancellationToken);
+        if (doctorId != visit.DoctorId && doctorId != Guid.Empty)
+        {
+            var doctorExists = await doctorRepository.ExistsAsync(doctorId, cancellationToken);
 
-         if (!doctorExists)
-         {
-            throw new RestException(HttpStatusCode.BadRequest, new
+            if (!doctorExists)
             {
-               Doctor = $"Doctor {doctorId} not found"
-            });
-         }
-      }
+                throw new RestException(
+                    HttpStatusCode.BadRequest,
+                    new { Doctor = $"Doctor {doctorId} not found" }
+                );
+            }
+        }
 
-      foreach (var procDto in request.Dto.VisitProcedures ?? [])
-      {
-         var procedureExists = await procedureRepository.ExistsAsync(procDto.ProcedureId, cancellationToken);
+        foreach (var procDto in request.Dto.VisitProcedures ?? [])
+        {
+            var procedureExists = await procedureRepository.ExistsAsync(
+                procDto.ProcedureId,
+                cancellationToken
+            );
 
-         if (!procedureExists)
-         {
-            throw new RestException(HttpStatusCode.BadRequest, new
+            if (!procedureExists)
             {
-               Procedure = $"Procedure {procDto.ProcedureId} not found"
-            });
-         }
-      }
+                throw new RestException(
+                    HttpStatusCode.BadRequest,
+                    new { Procedure = $"Procedure {procDto.ProcedureId} not found" }
+                );
+            }
+        }
 
-      foreach (var medDto in request.Dto.VisitMedications ?? [])
-      {
-         var medicationExists = await medicationRepository.ExistsAsync(medDto.MedicationId, cancellationToken);
+        foreach (var medDto in request.Dto.VisitMedications ?? [])
+        {
+            var medicationExists = await medicationRepository.ExistsAsync(
+                medDto.MedicationId,
+                cancellationToken
+            );
 
-         if (!medicationExists)
-         {
-            throw new RestException(HttpStatusCode.BadRequest, new
+            if (!medicationExists)
             {
-               Medication = $"Medication {medDto.MedicationId} not found"
-            });
-         }
-      }
+                throw new RestException(
+                    HttpStatusCode.BadRequest,
+                    new { Medication = $"Medication {medDto.MedicationId} not found" }
+                );
+            }
+        }
 
-      visit.Notes = request.Dto.Notes ?? visit.Notes;
-      visit.VisitDate = request.Dto.VisitDate;
+        visit.Notes = request.Dto.Notes ?? visit.Notes;
+        visit.VisitDate = request.Dto.VisitDate;
 
-      if (doctorId != Guid.Empty)
-      {
-         visit.DoctorId = doctorId;
-      }
+        if (doctorId != Guid.Empty)
+        {
+            visit.DoctorId = doctorId;
+        }
 
-      var procedures = (request.Dto.VisitProcedures ?? [])
-         .Select(dto => new VisitProcedure
-         {
+        var procedures = (request.Dto.VisitProcedures ?? []).Select(dto => new VisitProcedure
+        {
             Id = dto.Id != Guid.Empty ? dto.Id : Guid.NewGuid(),
             ProcedureId = dto.ProcedureId,
             Notes = dto.Notes,
-            VisitId = visit.Id
-         });
+            VisitId = visit.Id,
+        });
 
-      var medications = (request.Dto.VisitMedications ?? [])
-         .Select(dto => new VisitMedication
-         {
+        var medications = (request.Dto.VisitMedications ?? []).Select(dto => new VisitMedication
+        {
             Id = dto.Id != Guid.Empty ? dto.Id : Guid.NewGuid(),
             MedicationId = dto.MedicationId,
             Dosage = dto.Dosage,
             Notes = dto.Notes,
-            VisitId = visit.Id
-         });
+            VisitId = visit.Id,
+        });
 
-      // we use DbContextTransactionPipelineBehavior (mediatr lib stuff) here, so can make savepoints inside transaction with call SaveChangesAsync
-      await visitRepository.SaveChangesAsync(cancellationToken);
+        // we use DbContextTransactionPipelineBehavior (mediatr lib stuff) here, so can make savepoints inside transaction with call SaveChangesAsync
+        await visitRepository.SaveChangesAsync(cancellationToken);
 
-      IEnumerable<VisitProcedure> proceduresToKeep = procedures as VisitProcedure[] ?? procedures.ToArray();
-      IEnumerable<VisitMedication> medicationsToKeep = medications as VisitMedication[] ?? medications.ToArray();
+        IEnumerable<VisitProcedure> proceduresToKeep =
+            procedures as VisitProcedure[] ?? procedures.ToArray();
+        IEnumerable<VisitMedication> medicationsToKeep =
+            medications as VisitMedication[] ?? medications.ToArray();
 
-      visitRepository.RemoveVisitProcedures(visit, proceduresToKeep);
-      visitRepository.RemoveVisitMedications(visit, medicationsToKeep);
+        visitRepository.RemoveVisitProcedures(visit, proceduresToKeep);
+        visitRepository.RemoveVisitMedications(visit, medicationsToKeep);
 
-      // same
-      await visitRepository.SaveChangesAsync(cancellationToken);
+        // same
+        await visitRepository.SaveChangesAsync(cancellationToken);
 
-      await visitRepository.AddOrUpdateVisitProceduresAsync(visit, proceduresToKeep, cancellationToken);
-      await visitRepository.AddOrUpdateVisitMedicationsAsync(visit, medicationsToKeep, cancellationToken);
+        await visitRepository.AddOrUpdateVisitProceduresAsync(
+            visit,
+            proceduresToKeep,
+            cancellationToken
+        );
+        await visitRepository.AddOrUpdateVisitMedicationsAsync(
+            visit,
+            medicationsToKeep,
+            cancellationToken
+        );
 
-      // same
-      await visitRepository.SaveChangesAsync(cancellationToken);
+        // same
+        await visitRepository.SaveChangesAsync(cancellationToken);
 
-      var updatedVisit = await visitRepository.GetVisitWithDetailsAsync(visit.Id, cancellationToken);
+        var updatedVisit = await visitRepository.GetVisitWithDetailsAsync(
+            visit.Id,
+            cancellationToken
+        );
 
-      if (updatedVisit == null)
-      {
-         throw new RestException(HttpStatusCode.NotFound, new
-         {
-            Visit = "Visit not found after update"
-         });
-      }
+        if (updatedVisit == null)
+        {
+            throw new RestException(
+                HttpStatusCode.NotFound,
+                new { Visit = "Visit not found after update" }
+            );
+        }
 
-      return mapper.Map<VisitDto>(updatedVisit);
-   }
+        return mapper.Map<VisitDto>(updatedVisit);
+    }
 }

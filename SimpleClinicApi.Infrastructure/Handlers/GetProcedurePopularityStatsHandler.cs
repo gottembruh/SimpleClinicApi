@@ -12,39 +12,47 @@ using SimpleClinicApi.Infrastructure.Queries;
 
 namespace SimpleClinicApi.Infrastructure.Handlers;
 
-public class GetProcedurePopularityStatsHandler(IProcedureRepository procedureRepository, IMapper mapper)
-   : IRequestHandler<Query.GetProcedurePopularityDataQuery, ProcedurePopularityStatsDto>
+public class GetProcedurePopularityStatsHandler(
+    IProcedureRepository procedureRepository,
+    IMapper mapper
+) : IRequestHandler<Query.GetProcedurePopularityDataQuery, ProcedurePopularityStatsDto>
 {
-   public async Task<ProcedurePopularityStatsDto> Handle(Query.GetProcedurePopularityDataQuery request,
-                                                         CancellationToken cancellationToken)
-   {
-      var (mostPopular, mostCount, leastPopular, leastCount) =
-         await procedureRepository.GetPopularityStatsAsync(cancellationToken);
+    public async Task<ProcedurePopularityStatsDto> Handle(
+        Query.GetProcedurePopularityDataQuery request,
+        CancellationToken cancellationToken
+    )
+    {
+        var (mostPopular, mostCount, leastPopular, leastCount) =
+            await procedureRepository.GetPopularityStatsAsync(cancellationToken);
 
-      if (mostPopular == null || leastPopular == null)
-      {
-         throw new RestException(HttpStatusCode.NotFound, "No procedures at database");
-      }
+        if (mostPopular == null || leastPopular == null)
+        {
+            throw new RestException(HttpStatusCode.NotFound, "No procedures at database");
+        }
 
-      return new ProcedurePopularityStatsDto
-         (
-          mapper.Map<ProcedureDto>(mostPopular),
-          mostCount,
-          mapper.Map<ProcedureDto>(leastPopular),
-          leastCount
-         );
-   }
+        return new ProcedurePopularityStatsDto(
+            mapper.Map<ProcedureDto>(mostPopular),
+            mostCount,
+            mapper.Map<ProcedureDto>(leastPopular),
+            leastCount
+        );
+    }
 }
 
 public class GetProcedureToPatientsHandler(IProcedureRepository repository, IMapper mapper)
-   : IRequestHandler<Query.GetProcedureToPatientsQuery, ILookup<ProcedureDto, PatientDto>>
+    : IRequestHandler<Query.GetProcedureToPatientsQuery, ILookup<ProcedureDto, PatientDto>>
 {
-   public async Task<ILookup<ProcedureDto, PatientDto>> Handle(Query.GetProcedureToPatientsQuery request,
-                                                               CancellationToken cancellationToken)
-   {
-      var lookup = await repository.GetProceduresToPatientsLookupAsync(cancellationToken);
-      var mappedLookup = lookup.ToLookup(kvp => mapper.Map<ProcedureDto>(kvp.Key), mapper.Map<PatientDto>);
+    public async Task<ILookup<ProcedureDto, PatientDto>> Handle(
+        Query.GetProcedureToPatientsQuery request,
+        CancellationToken cancellationToken
+    )
+    {
+        var lookup = await repository.GetProceduresToPatientsLookupAsync(cancellationToken);
+        var mappedLookup = lookup.ToLookup(
+            kvp => mapper.Map<ProcedureDto>(kvp.Key),
+            mapper.Map<PatientDto>
+        );
 
-      return mappedLookup;
-   }
+        return mappedLookup;
+    }
 }

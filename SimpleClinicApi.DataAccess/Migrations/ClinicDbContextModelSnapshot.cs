@@ -251,6 +251,7 @@ namespace SimpleClinicApi.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
+                        .HasMaxLength(300)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -310,7 +311,6 @@ namespace SimpleClinicApi.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -374,7 +374,6 @@ namespace SimpleClinicApi.DataAccess.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 

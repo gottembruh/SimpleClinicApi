@@ -9,26 +9,28 @@ using SimpleClinicApi.Domain.Models;
 using SimpleClinicApi.Infrastructure.Commands;
 using SimpleClinicApi.Infrastructure.Errors;
 
-namespace SimpleClinicApi.Infrastructure.Handlers
-{
-   public class CreatePatientCommandHandler(IPatientRepository repository, IMapper mapper)
-      : IRequestHandler<CreatePatientCommand, Guid>
-   {
-      public async Task<Guid> Handle(CreatePatientCommand request, CancellationToken cancellationToken)
-      {
-         var patient = mapper.Map<Patient>(request.Patient);
+namespace SimpleClinicApi.Infrastructure.Handlers;
 
-         try
-         {
+public class CreatePatientCommandHandler(IPatientRepository repository, IMapper mapper)
+    : IRequestHandler<CreatePatientCommand, Guid>
+{
+    public async Task<Guid> Handle(
+        CreatePatientCommand request,
+        CancellationToken cancellationToken
+    )
+    {
+        var patient = mapper.Map<Patient>(request.Patient);
+
+        try
+        {
             await repository.AddAsync(patient, cancellationToken);
             await repository.SaveChangesAsync(cancellationToken);
 
             return patient.Id;
-         }
-         catch (InvalidOperationException e)
-         {
+        }
+        catch (InvalidOperationException e)
+        {
             throw new RestException(HttpStatusCode.Conflict, e.Message);
-         }
-      }
-   }
+        }
+    }
 }

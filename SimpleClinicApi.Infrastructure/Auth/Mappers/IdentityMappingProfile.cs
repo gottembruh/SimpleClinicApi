@@ -3,14 +3,13 @@ using JetBrains.Annotations;
 using Microsoft.AspNetCore.Identity;
 using SimpleClinicApi.Infrastructure.Auth.Dtos;
 
-namespace SimpleClinicApi.Infrastructure.Auth.Mappers
+namespace SimpleClinicApi.Infrastructure.Auth.Mappers;
+
+[UsedImplicitly]
+public class IdentityMappingProfile : Profile
 {
-   [UsedImplicitly]
-   public class IdentityMappingProfile : Profile
-   {
-      public IdentityMappingProfile()
-      {
-         CreateMap<RegisterDto, IdentityUser>(MemberList.None).ReverseMap();
-      }
-   }
+    public IdentityMappingProfile()
+    {
+        CreateMap<RegisterDto, IdentityUser>(MemberList.None).ReverseMap();
+    }
 }

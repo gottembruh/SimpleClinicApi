@@ -10,6 +10,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClinicApi.Tests", "SimpleClinicApi.Tests\SimpleClinicApi.Tests.csproj", "{A2740FF9-806E-421B-8AC1-7532A277FCF9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{84A89504-EE86-43E2-91C6-F1D5561E8E0D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		NuGet.config = NuGet.config
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{B73CEDBE-5EAF-491C-B55E-F2666E390352}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Build", "Build\Build.csproj", "{313F7730-0C9F-49C6-AE99-24527AAA0F02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +50,12 @@ Global
 		{A2740FF9-806E-421B-8AC1-7532A277FCF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2740FF9-806E-421B-8AC1-7532A277FCF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2740FF9-806E-421B-8AC1-7532A277FCF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{313F7730-0C9F-49C6-AE99-24527AAA0F02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{313F7730-0C9F-49C6-AE99-24527AAA0F02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{313F7730-0C9F-49C6-AE99-24527AAA0F02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{313F7730-0C9F-49C6-AE99-24527AAA0F02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{313F7730-0C9F-49C6-AE99-24527AAA0F02} = {B73CEDBE-5EAF-491C-B55E-F2666E390352}
 	EndGlobalSection
 EndGlobal

@@ -1,87 +1,64 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SimpleClinicApi.Domain.Models
+namespace SimpleClinicApi.Domain.Models;
+
+public class VisitProcedure : IEquatable<VisitProcedure>
 {
-   public class VisitProcedure : IEquatable<VisitProcedure>
-   {
-      [Key]
-      public Guid Id
-      {
-         get;
-         init;
-      }
+    [Key]
+    public Guid Id { get; init; }
 
-      [Required]
-      public Guid VisitId
-      {
-         get;
-         init;
-      }
+    [Required]
+    public Guid VisitId { get; init; }
 
-      public Visit Visit
-      {
-         get;
-         init;
-      } = null!;
+    public Visit Visit { get; init; } = null!;
 
-      [Required]
-      public Guid ProcedureId
-      {
-         get;
-         set;
-      }
+    [Required]
+    public Guid ProcedureId { get; set; }
 
-      public Procedure Procedure
-      {
-         get;
-         init;
-      } = null!;
+    public Procedure Procedure { get; init; } = null!;
 
-      [MaxLength(500)]
-      public string? Notes
-      {
-         get;
-         set;
-      }
+    [MaxLength(500)]
+    public string? Notes { get; set; }
 
-      #region Equality members
+    #region Equality members
 
-      public bool Equals(VisitProcedure? other)
-      {
-         if (other is null)
-         {
+    public bool Equals(VisitProcedure? other)
+    {
+        if (other is null)
+        {
             return false;
-         }
+        }
 
-         if (ReferenceEquals(this, other))
-         {
+        if (ReferenceEquals(this, other))
+        {
             return true;
-         }
+        }
 
-         return Id.Equals(other.Id) && VisitId.Equals(other.VisitId) && ProcedureId.Equals(other.ProcedureId);
-      }
+        return Id.Equals(other.Id)
+            && VisitId.Equals(other.VisitId)
+            && ProcedureId.Equals(other.ProcedureId);
+    }
 
-      public override bool Equals(object? obj)
-      {
-         if (obj is null)
-         {
+    public override bool Equals(object? obj)
+    {
+        if (obj is null)
+        {
             return false;
-         }
+        }
 
-         if (ReferenceEquals(this, obj))
-         {
+        if (ReferenceEquals(this, obj))
+        {
             return true;
-         }
+        }
 
-         return obj.GetType() == GetType() && Equals((VisitProcedure) obj);
-      }
+        return obj.GetType() == GetType() && Equals((VisitProcedure)obj);
+    }
 
-      public override int GetHashCode()
-      {
-         return HashCode.Combine(Id, VisitId, ProcedureId);
-      }
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Id, VisitId, ProcedureId);
+    }
 
-      #endregion
-   }
+    #endregion
 }

@@ -1,6 +1,3 @@
-namespace SimpleClinicApi.Infrastructure.Auth.Dtos
-{
-   public record LoginDto(string? UserName, string? Password);
+namespace SimpleClinicApi.Infrastructure.Auth.Dtos;
 
-
-}
+public record LoginDto(string? UserName, string? Password);

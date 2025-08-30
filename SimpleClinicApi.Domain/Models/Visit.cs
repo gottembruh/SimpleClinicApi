@@ -3,77 +3,37 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace SimpleClinicApi.Domain.Models
+namespace SimpleClinicApi.Domain.Models;
+
+public class Visit
 {
-   public class Visit
-   {
-      [Key]
-      public Guid Id
-      {
-         get;
-         init;
-      } = Guid.NewGuid();
+    [Key]
+    public Guid Id { get; init; } = Guid.NewGuid();
 
-      [Required]
-      public DateTime VisitDate
-      {
-         get;
-         set;
-      }
+    [Required]
+    public DateTime VisitDate { get; set; }
 
-      [MaxLength(500)]
-      public string? Notes
-      {
-         get;
-         set;
-      }
+    [MaxLength(500)]
+    public string? Notes { get; set; }
 
-      [Required]
-      public Guid PatientId
-      {
-         get;
-         init;
-      }
+    [Required]
+    public Guid PatientId { get; init; }
 
-      public Patient Patient
-      {
-         get;
-         init;
-      } = null!;
+    public Patient Patient { get; init; } = null!;
 
-      [Required]
-      public Guid DoctorId
-      {
-         get;
-         set;
-      }
+    [Required]
+    public Guid DoctorId { get; set; }
 
-      public Doctor Doctor
-      {
-         get;
-         init;
-      } = null!;
+    public Doctor Doctor { get; init; } = null!;
 
-      public ICollection<VisitProcedure> VisitProcedures
-      {
-         get;
-         init;
-      } = new List<VisitProcedure>();
+    public ICollection<VisitProcedure> VisitProcedures { get; init; } = new List<VisitProcedure>();
 
-      public ICollection<VisitMedication> VisitMedications
-      {
-         get;
-         init;
-      } = new List<VisitMedication>();
+    public ICollection<VisitMedication> VisitMedications { get; init; } =
+        new List<VisitMedication>();
 
-      public bool IsCompleted
-      {
-         get;
-         init;
-      }
+    public bool IsCompleted { get; init; }
 
-      public IEnumerable<Guid> ProceduresIds => VisitProcedures.Select(x => x.ProcedureId);
+    public IEnumerable<Guid> ProceduresIds => VisitProcedures.Select(x => x.ProcedureId);
 
-      public IEnumerable<Guid> MedicationsIds => VisitMedications.Select(x => x.MedicationId);
-   }
+    public IEnumerable<Guid> MedicationsIds => VisitMedications.Select(x => x.MedicationId);
 }

@@ -1,25 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
-        <LangVersion>12</LangVersion>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="15.0.1" />
-      <PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
-      <PackageReference Include="MediatR" Version="13.0.0" />
-      <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="6.0.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.8" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\SimpleClinicApi.DataAccess\SimpleClinicApi.DataAccess.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Validators\" />
-    </ItemGroup>
-
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" />
+    <PackageReference Include="JetBrains.Annotations" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleClinicApi.DataAccess\SimpleClinicApi.DataAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
 </Project>
