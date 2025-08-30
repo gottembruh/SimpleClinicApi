@@ -11,14 +11,8 @@ namespace SimpleClinicApi.Controllers;
 public class AccountController(IMediator mediator) : ControllerBase
 {
     [HttpPost("register")]
-    public async Task<AuthResponseDto> Register(RegisterDto dto)
-    {
-        return await mediator.Send(new RegisterUserCommand(dto));
-    }
+    public async Task<AuthResponseDto> Register(RegisterDto dto) => await mediator.Send(new RegisterUserCommand(dto));
 
     [HttpPost("login")]
-    public async Task<AuthResponseDto> Login(LoginDto dto)
-    {
-        return await mediator.Send(new LoginUserCommand(dto));
-    }
+    public async Task<AuthResponseDto> Login(LoginDto dto) => await mediator.Send(new LoginUserCommand(dto));
 }
