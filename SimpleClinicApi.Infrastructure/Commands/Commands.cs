@@ -15,6 +15,15 @@ public record UpdatePatientCommand(Guid Id, CreateUpdatePatientDto Patient) : IR
 public record DeletePatientCommand(Guid Id) : IRequest;
 
 [UsedImplicitly]
+public record CreateDoctorCommand(CreateUpdateDoctorDto Doctor) : IRequest<Guid>;
+
+[UsedImplicitly]
+public record UpdateDoctorCommand(Guid Id, CreateUpdateDoctorDto DOctor) : IRequest;
+
+[UsedImplicitly]
+public record DeleteDoctorCommand(Guid Id) : IRequest;
+
+[UsedImplicitly]
 public record CreateProcedureCommand(CreateUpdateProcedureDto Procedure) : IRequest<Guid>;
 
 [UsedImplicitly]

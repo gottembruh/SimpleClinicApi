@@ -14,15 +14,10 @@ public class UpdatePatientCommandHandler(IPatientRepository repository, IMapper 
 {
     public async Task Handle(UpdatePatientCommand request, CancellationToken cancellationToken)
     {
-        var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken);
-
-        if (patient == null)
-        {
-            throw new RestException(
-                HttpStatusCode.NotFound,
-                $"Patient with id {request.Id} not found."
-            );
-        }
+        var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken) ?? throw new RestException(
+            HttpStatusCode.NotFound,
+            $"Patient with id {request.Id} not found."
+        );
 
         mapper.Map(request.Patient, patient);
 
@@ -30,3 +25,21 @@ public class UpdatePatientCommandHandler(IPatientRepository repository, IMapper 
         await repository.SaveChangesAsync(cancellationToken);
     }
 }
+
+public class UpdateDoctorCommandHandler(IDoctorRepository repository, IMapper mapper)
+    : IRequestHandler<UpdateDoctorCommand>
+{
+    public async Task Handle(UpdateDoctorCommand request, CancellationToken cancellationToken)
+    {
+        var patient = await repository.GetByIdWholeAsync(request.Id, cancellationToken) ?? throw new RestException(
+            HttpStatusCode.NotFound,
+            $"Doctor with id {request.Id} not found."
+        );
+
+        mapper.Map(request.DOctor, patient);
+
+        repository.Update(patient);
+        await repository.SaveChangesAsync(cancellationToken);
+    }
+}
+

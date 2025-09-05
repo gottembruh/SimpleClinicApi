@@ -6,18 +6,13 @@ namespace SimpleClinicApi.Domain.Models;
 
 public class Doctor
 {
-    [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    [Key] public Guid Id { get; init; } = Guid.NewGuid();
 
-    [Required]
-    [MaxLength(100)]
-    public string FullName { get; init; } = null!;
+    [Required] [MaxLength(100)] public required string FullName { get; init; }
 
-    [MaxLength(100)]
-    public string Specialty { get; set; } = null!;
+    [MaxLength(100)] public required string Specialty { get; init; }
 
-    [MaxLength(15)]
-    public string PhoneNumber { get; set; } = null!;
+    [MaxLength(15)] public required string PhoneNumber { get; init; }
 
-    public ICollection<Visit>? Visits { get; set; }
+    public ICollection<Visit> Visits { get; init; } = new List<Visit>();
 }

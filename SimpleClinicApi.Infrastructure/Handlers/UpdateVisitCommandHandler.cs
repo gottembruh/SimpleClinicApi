@@ -27,12 +27,8 @@ public class UpdateVisitCommandHandler(
         CancellationToken cancellationToken
     )
     {
-        var visit = await visitRepository.GetVisitWithDetailsAsync(request.Id, cancellationToken);
-
-        if (visit == null)
-        {
-            throw new RestException(HttpStatusCode.NotFound, new { Visit = "Visit not found" });
-        }
+        var visit = await visitRepository.GetVisitWithDetailsAsync(request.Id, cancellationToken) ??
+                    throw new RestException(HttpStatusCode.NotFound, new { Visit = "Visit not found" });
 
         var doctorId = request.Dto.DoctorId;
 
@@ -110,9 +106,9 @@ public class UpdateVisitCommandHandler(
         await visitRepository.SaveChangesAsync(cancellationToken);
 
         IEnumerable<VisitProcedure> proceduresToKeep =
-            procedures as VisitProcedure[] ?? procedures.ToArray();
+            procedures as VisitProcedure[] ?? [.. procedures];
         IEnumerable<VisitMedication> medicationsToKeep =
-            medications as VisitMedication[] ?? medications.ToArray();
+            medications as VisitMedication[] ?? [.. medications];
 
         visitRepository.RemoveVisitProcedures(visit, proceduresToKeep);
         visitRepository.RemoveVisitMedications(visit, medicationsToKeep);

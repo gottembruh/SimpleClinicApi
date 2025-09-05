@@ -69,7 +69,7 @@ public class VisitRepository(ClinicDbContext context)
 
         var toUpdate = existing.Where(ep => procedures.Any(p => p.Id == ep.Id)).ToList();
         IEnumerable<VisitProcedure> visitProcedures =
-            procedures as VisitProcedure[] ?? procedures.ToArray();
+            procedures as VisitProcedure[] ?? [.. procedures];
         var toAdd = visitProcedures.Where(p => existing.All(ep => ep.Id != p.Id)).ToList();
 
         foreach (var proc in toUpdate)
@@ -106,7 +106,7 @@ public class VisitRepository(ClinicDbContext context)
 
         var toUpdate = existing.Where(em => medications.Any(m => m.Id == em.Id)).ToList();
         IEnumerable<VisitMedication> visitMedications =
-            medications as VisitMedication[] ?? medications.ToArray();
+            medications as VisitMedication[] ?? [.. medications];
         var toAdd = visitMedications.Where(m => existing.All(em => em.Id != m.Id)).ToList();
 
         foreach (var med in toUpdate)

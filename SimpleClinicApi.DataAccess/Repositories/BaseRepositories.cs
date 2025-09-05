@@ -20,6 +20,7 @@ public interface IPatientRepository : IRepository<Patient>
 public interface IDoctorRepository : IRepository<Doctor>
 {
     public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
+    public Task<Doctor?> GetByIdWholeAsync(Guid id, CancellationToken cancellationToken = default);
 }
 
 public interface IProcedureRepository : IRepository<Procedure>
@@ -37,14 +38,6 @@ public interface IProcedureRepository : IRepository<Procedure>
 public interface IMedicationRepository : IRepository<Medication>
 {
     public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default);
-}
-
-public class DoctorRepository(ClinicDbContext context)
-    : GenericRepository<Doctor, ClinicDbContext>(context),
-        IDoctorRepository
-{
-    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
-        Set.AnyAsync(d => d.Id == id, cancellationToken);
 }
 
 public class MedicationRepository(ClinicDbContext context)

@@ -14,7 +14,13 @@ public class Query
     public record GetPatientsQuery : IRequest<IEnumerable<PatientDto>>;
 
     [UsedImplicitly]
+    public record GetDoctorsQuery : IRequest<IEnumerable<DoctorDto>>;
+
+    [UsedImplicitly]
     public record PatientWithAllDetailsQuery(Guid Id) : IRequest<PatientDto?>;
+
+    [UsedImplicitly]
+    public record DoctorWithAllDetailsQuery(Guid Id) : IRequest<DoctorDto?>;
 
     [UsedImplicitly]
     public record GetProcedureToPatientsQuery : IRequest<IEnumerable<ProcedureWithPatientsDto>>;
