@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Moq;
-using SimpleClinicApi.Infrastructure.Auth;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
 using SimpleClinicApi.Infrastructure.Auth.Dtos;
 using SimpleClinicApi.Infrastructure.Auth.Handlers;

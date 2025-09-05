@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using SimpleClinicApi.Infrastructure.Auth;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
 using SimpleClinicApi.Infrastructure.Auth.Dtos;
 using SimpleClinicApi.Infrastructure.Auth.Validators;
@@ -10,10 +9,7 @@ public class LoginUserCommandValidatorTests
 {
     private readonly LoginUserCommandValidator _validator = new();
 
-    private LoginUserCommand CreateCommand(string userName, string password)
-    {
-        return new LoginUserCommand(new LoginDto(UserName: userName, Password: password));
-    }
+    private LoginUserCommand CreateCommand(string userName, string password) => new(new LoginDto(UserName: userName, Password: password));
 
     [Fact]
     public void Should_Have_Error_When_UserName_Is_Null_Or_Empty()

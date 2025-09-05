@@ -7,7 +7,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SimpleClinicApi.DataAccess;
 using SimpleClinicApi.Extensions;
-using SimpleClinicApi.Infrastructure.Auth.Commands;
 using SimpleClinicApi.Infrastructure.Errors;
 
 var builder = WebApplication.CreateBuilder(args);

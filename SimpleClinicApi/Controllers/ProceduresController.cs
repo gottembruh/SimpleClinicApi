@@ -9,7 +9,6 @@ namespace SimpleClinicApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class ProceduresController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
@@ -21,10 +20,8 @@ public class ProceduresController(IMediator mediator) : ControllerBase
         await mediator.Send(new Query.GetProcedurePopularityDataQuery());
 
     [HttpGet("patients-lookup")]
-    public async Task<ILookup<ProcedureDto, PatientDto>> GetProceduresWithPatientsLookup()
-    {
-        return await mediator.Send(new Query.GetProcedureToPatientsQuery());
-    }
+    public async Task<IEnumerable<ProcedureWithPatientsDto>> GetProceduresWithPatientsLookup() =>
+        await mediator.Send(new Query.GetProcedureToPatientsQuery());
 
     [HttpPost]
     public Task<Guid> Create(CreateUpdateProcedureDto dto) =>

@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace SimpleClinicApi.Infrastructure.Dtos;
 
 [UsedImplicitly]
-public class PatientDto(
+public record PatientDto(
     Guid Id,
     string FullName,
     DateTime DateOfBirth,

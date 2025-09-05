@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using SimpleClinicApi.Infrastructure.Auth;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
 using SimpleClinicApi.Infrastructure.Auth.Dtos;
 using SimpleClinicApi.Infrastructure.Auth.Validators;

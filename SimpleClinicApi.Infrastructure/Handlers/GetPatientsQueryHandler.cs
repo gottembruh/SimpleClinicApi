@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using SimpleClinicApi.DataAccess.Repositories;
-using SimpleClinicApi.Domain.Models;
 using SimpleClinicApi.Infrastructure.Dtos;
 using SimpleClinicApi.Infrastructure.Queries;
 

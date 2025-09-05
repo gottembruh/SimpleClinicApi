@@ -9,17 +9,12 @@ public class RestException(HttpStatusCode code, object? errors = null) : Excepti
 
     public HttpStatusCode Code { get; } = code;
 
-    public override string Message
-    {
-        get
+    public override string Message =>
+        Errors switch
         {
-            return Errors switch
-            {
-                null => base.Message,
-                string s => s,
-                Exception ex => ex.Message,
-                _ => Errors.ToString() ?? string.Empty,
-            };
-        }
-    }
+            null => base.Message,
+            string s => s,
+            Exception ex => ex.Message,
+            _ => Errors.ToString() ?? string.Empty,
+        };
 }

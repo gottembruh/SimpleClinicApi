@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage;
 using SimpleClinicApi.Domain.Models;
 
@@ -156,19 +155,14 @@ public class ClinicDbContext(DbContextOptions<ClinicDbContext> options) : Identi
         }
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder
             .UseSqlite("Data Source=clinic.db")
             // .ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))
             .UseSeeding(Seed)
             .UseAsyncSeeding(SeedAsync);
-    }
 
-    private void Seed(DbContext arg1, bool _)
-    {
-        SeedAsync(arg1, _).Wait();
-    }
+    private void Seed(DbContext arg1, bool _) => SeedAsync(arg1, _).Wait();
 
     private async Task SeedAsync(
         DbContext arg1,

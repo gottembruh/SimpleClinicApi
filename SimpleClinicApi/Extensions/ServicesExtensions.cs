@@ -3,7 +3,6 @@ using MediatR;
 using SimpleClinicApi.DataAccess.Repositories;
 using SimpleClinicApi.Infrastructure;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
-using SimpleClinicApi.Infrastructure.Auth.Mappers;
 using SimpleClinicApi.Infrastructure.Auth.Utilities;
 
 namespace SimpleClinicApi.Extensions;

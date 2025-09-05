@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using SimpleClinicApi.Domain.Models;
 using SimpleClinicApi.Infrastructure.Dtos;
-using SQLitePCL;
 
 namespace SimpleClinicApi.Infrastructure;
 
@@ -18,6 +17,6 @@ public class MappingProfile : Profile
         CreateMap<VisitProcedure, VisitProcedureDto>(MemberList.Destination);
 
         CreateMap<Visit, VisitDto>(MemberList.Destination);
-        CreateMap<Patient, PatientDto>(MemberList.Destination);
+        CreateMap<Patient, PatientDto>(MemberList.Destination).ReverseMap();
     }
 }

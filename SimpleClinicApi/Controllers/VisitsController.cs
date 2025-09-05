@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleClinicApi.Infrastructure.Commands;
 using SimpleClinicApi.Infrastructure.Dtos;
@@ -15,10 +14,7 @@ public class VisitsController(IMediator mediator) : ControllerBase
     public Task<IEnumerable<PatientDto>> Get() => mediator.Send(new Query.GetPatientsQuery());
 
     [HttpGet("patients-visits")]
-    public async Task<ILookup<PatientDto, VisitDto>> GetPatientsToVisitsLookup()
-    {
-        return await mediator.Send(new Query.GetPatientToVisitsQuery());
-    }
+    public async Task<ILookup<PatientDto, VisitDto>> GetPatientsToVisitsLookup() => await mediator.Send(new Query.GetPatientToVisitsQuery());
 
     [HttpPost]
     public Task<VisitDto> Create([FromBody] CreateUpdateVisitDto dto) =>

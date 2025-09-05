@@ -11,26 +11,25 @@ public class ProcedureRepository(ClinicDbContext context)
     : GenericRepository<Procedure, ClinicDbContext>(context),
         IProcedureRepository
 {
-    public async Task<(
-        Procedure MostPopular,
-        int MostPopularCount,
-        Procedure LeastPopular,
-        int LeastPopularCount
-    )> GetPopularityStatsAsync(CancellationToken cancellationToken = default)
+    public async Task<(Procedure MostPopular, int MostPopularCount, Procedure LeastPopular, int LeastPopularCount)?>
+        GetPopularityStatsAsync(CancellationToken cancellationToken = default)
     {
-        var procedureCounts = await Context
+        var proceduresByCount = await Context
             .VisitProcedures.GroupBy(vp => vp.ProcedureId)
             .Select(g => new { ProcedureId = g.Key, Count = g.Count() })
             .ToListAsync(cancellationToken);
 
-        if (procedureCounts.Count == 0) { }
+        if (proceduresByCount.Count == 0)
+        {
+            return null;
+        }
 
         var proceduresDict = await Context
-            .Procedures.Where(p => procedureCounts.Select(pc => pc.ProcedureId).Contains(p.Id))
+            .Procedures.Where(p => proceduresByCount.Select(pc => pc.ProcedureId).Contains(p.Id))
             .ToDictionaryAsync(p => p.Id, cancellationToken);
 
-        var maxGroup = procedureCounts.OrderByDescending(pc => pc.Count).First();
-        var minGroup = procedureCounts.OrderBy(pc => pc.Count).First();
+        var maxGroup = proceduresByCount.OrderByDescending(pc => pc.Count).First();
+        var minGroup = proceduresByCount.OrderBy(pc => pc.Count).First();
 
         var mostPopular = proceduresDict[maxGroup.ProcedureId];
         var leastPopular = proceduresDict[minGroup.ProcedureId];
@@ -53,8 +52,6 @@ public class ProcedureRepository(ClinicDbContext context)
         return lookup;
     }
 
-    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return Set.AnyAsync(p => p.Id == id, cancellationToken);
-    }
+    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
+        Set.AnyAsync(p => p.Id == id, cancellationToken);
 }

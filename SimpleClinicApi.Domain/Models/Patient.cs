@@ -68,10 +68,7 @@ public class Patient : IEquatable<Patient>
         return Equals((Patient)obj);
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(FullName, DateOfBirth, PhoneNumber);
-    }
+    public override int GetHashCode() => HashCode.Combine(FullName, DateOfBirth, PhoneNumber);
 
     #endregion
 }

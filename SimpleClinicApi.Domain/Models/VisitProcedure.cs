@@ -55,10 +55,7 @@ public class VisitProcedure : IEquatable<VisitProcedure>
         return obj.GetType() == GetType() && Equals((VisitProcedure)obj);
     }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Id, VisitId, ProcedureId);
-    }
+    public override int GetHashCode() => HashCode.Combine(Id, VisitId, ProcedureId);
 
     #endregion
 }

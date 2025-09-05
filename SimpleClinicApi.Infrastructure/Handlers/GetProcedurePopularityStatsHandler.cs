@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -22,13 +20,10 @@ public class GetProcedurePopularityStatsHandler(
         CancellationToken cancellationToken
     )
     {
-        var (mostPopular, mostCount, leastPopular, leastCount) =
-            await procedureRepository.GetPopularityStatsAsync(cancellationToken);
+        var groupResult = await procedureRepository.GetPopularityStatsAsync(cancellationToken) ??
+                          throw new RestException(HttpStatusCode.NotFound, "No procedures at database");
 
-        if (mostPopular == null || leastPopular == null)
-        {
-            throw new RestException(HttpStatusCode.NotFound, "No procedures at database");
-        }
+        var (mostPopular, mostCount, leastPopular, leastCount) = groupResult;
 
         return new ProcedurePopularityStatsDto(
             mapper.Map<ProcedureDto>(mostPopular),
@@ -36,23 +31,5 @@ public class GetProcedurePopularityStatsHandler(
             mapper.Map<ProcedureDto>(leastPopular),
             leastCount
         );
-    }
-}
-
-public class GetProcedureToPatientsHandler(IProcedureRepository repository, IMapper mapper)
-    : IRequestHandler<Query.GetProcedureToPatientsQuery, ILookup<ProcedureDto, PatientDto>>
-{
-    public async Task<ILookup<ProcedureDto, PatientDto>> Handle(
-        Query.GetProcedureToPatientsQuery request,
-        CancellationToken cancellationToken
-    )
-    {
-        var lookup = await repository.GetProceduresToPatientsLookupAsync(cancellationToken);
-        var mappedLookup = lookup.ToLookup(
-            kvp => mapper.Map<ProcedureDto>(kvp.Key),
-            mapper.Map<PatientDto>
-        );
-
-        return mappedLookup;
     }
 }

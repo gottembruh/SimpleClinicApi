@@ -17,7 +17,7 @@ public class Query
     public record PatientWithAllDetailsQuery(Guid Id) : IRequest<PatientDto?>;
 
     [UsedImplicitly]
-    public record GetProcedureToPatientsQuery : IRequest<ILookup<ProcedureDto, PatientDto>>;
+    public record GetProcedureToPatientsQuery : IRequest<IEnumerable<ProcedureWithPatientsDto>>;
 
     [UsedImplicitly]
     public record GetPatientToVisitsQuery : IRequest<ILookup<PatientDto, VisitDto>>;

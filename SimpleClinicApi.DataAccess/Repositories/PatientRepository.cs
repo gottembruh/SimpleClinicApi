@@ -31,19 +31,16 @@ public class PatientRepository(ClinicDbContext context)
 
     public async Task<IEnumerable<Patient>> GetAllWithVisitsAsync(
         CancellationToken cancellationToken = default
-    )
-    {
-        return await Set.Include(x => x.Visits)
+    ) =>
+        await Set.Include(x => x.Visits)
             .AsNoTracking()
             .ToListAsync(cancellationToken: cancellationToken);
-    }
 
     public async Task<Patient?> GetByIdWholeAsync(
         Guid id,
         CancellationToken cancellationToken = default
-    )
-    {
-        return await Context
+    ) =>
+        await Context
             .Patients.Include(p => p.Visits)
             .ThenInclude(v => v.Doctor)
             .Include(p => p.Visits)
@@ -56,7 +53,6 @@ public class PatientRepository(ClinicDbContext context)
             .AsSplitQuery()
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
-    }
 
     #region Alternative impl with explicit loading
 

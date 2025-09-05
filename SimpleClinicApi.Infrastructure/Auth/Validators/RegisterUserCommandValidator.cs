@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using MediatR;
 using SimpleClinicApi.Infrastructure.Auth.Commands;
 
 namespace SimpleClinicApi.Infrastructure.Auth.Validators;

@@ -13,6 +13,7 @@ public interface IPatientRepository : IRepository<Patient>
     public Task<IEnumerable<Patient>> GetAllWithVisitsAsync(
         CancellationToken cancellationToken = default
     );
+
     public Task<Patient?> GetByIdWholeAsync(Guid id, CancellationToken cancellationToken = default);
 }
 
@@ -23,12 +24,8 @@ public interface IDoctorRepository : IRepository<Doctor>
 
 public interface IProcedureRepository : IRepository<Procedure>
 {
-    public Task<(
-        Procedure MostPopular,
-        int MostPopularCount,
-        Procedure LeastPopular,
-        int LeastPopularCount
-    )> GetPopularityStatsAsync(CancellationToken cancellationToken = default);
+    public Task<(Procedure MostPopular, int MostPopularCount, Procedure LeastPopular, int LeastPopularCount)?>
+        GetPopularityStatsAsync(CancellationToken cancellationToken = default);
 
     public Task<ILookup<Procedure, Patient>> GetProceduresToPatientsLookupAsync(
         CancellationToken cancellationToken = default
@@ -46,18 +43,14 @@ public class DoctorRepository(ClinicDbContext context)
     : GenericRepository<Doctor, ClinicDbContext>(context),
         IDoctorRepository
 {
-    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return Set.AnyAsync(d => d.Id == id, cancellationToken);
-    }
+    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
+        Set.AnyAsync(d => d.Id == id, cancellationToken);
 }
 
 public class MedicationRepository(ClinicDbContext context)
     : GenericRepository<Medication, ClinicDbContext>(context),
         IMedicationRepository
 {
-    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default)
-    {
-        return Set.AnyAsync(d => d.Id == id, cancellationToken);
-    }
+    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken = default) =>
+        Set.AnyAsync(d => d.Id == id, cancellationToken);
 }

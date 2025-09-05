@@ -18,3 +18,6 @@ public record ProcedurePopularityStatsDto(
 );
 
 public record CreateUpdateProcedureDto(string Name, string? Description, decimal Cost);
+
+public record ProcedureWithPatientsDto(ProcedureDto Procedure, IEnumerable<PatientDto>? Patients);
+

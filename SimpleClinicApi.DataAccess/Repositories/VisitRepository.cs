@@ -28,31 +28,25 @@ public class VisitRepository(ClinicDbContext context)
     public async Task<Visit?> GetVisitWithDetailsAsync(
         Guid visitId,
         CancellationToken cancellationToken
-    )
-    {
-        return await Context
+    ) =>
+        await Context
             .Visits.Include(v => v.Doctor)
             .Include(v => v.Patient)
             .Include(v => v.VisitProcedures)
             .Include(v => v.VisitMedications)
             .FirstOrDefaultAsync(v => v.Id == visitId, cancellationToken);
-    }
 
     public Task AddVisitProceduresRangeAsync(
         IEnumerable<VisitProcedure> items,
         CancellationToken ct
-    )
-    {
-        return Context.VisitProcedures.AddRangeAsync(items, ct);
-    }
+    ) =>
+        Context.VisitProcedures.AddRangeAsync(items, ct);
 
     public Task AddVisitMedicationsRangeAsync(
         IEnumerable<VisitMedication> items,
         CancellationToken ct
-    )
-    {
-        return Context.VisitMedications.AddRangeAsync(items, ct);
-    }
+    ) =>
+        Context.VisitMedications.AddRangeAsync(items, ct);
 
     public void RemoveVisitProcedures(Visit visit, IEnumerable<VisitProcedure> proceduresToKeep)
     {
